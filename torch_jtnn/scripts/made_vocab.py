@@ -33,9 +33,13 @@ class Main():
 
     def get_vocab(self,smiles):
         cset = set()
-        mol = MolTree(smiles)
-        for c in mol.nodes:
-            cset.add(c.smiles)
+        try:
+            mol = MolTree(smiles)
+        except Exception as e:
+            pass
+        else:
+            for c in mol.nodes:
+                cset.add(c.smiles)
         return cset
 
     def callback(self,one_set):

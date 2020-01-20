@@ -15,6 +15,7 @@ setup(
     entry_points={
         'console_scripts':[
             'make_vocab = torch_jtnn.scripts:make_vocab',
+            'jtnn_prepro = torch_jtnn.scripts:jtnn_prepro'
         ]
     }
 )
