@@ -3,7 +3,7 @@ from multiprocessing import Pool
 from argparse import ArgumentParser
 from pathlib import Path
 
-class Main():
+class MakeVocab():
     def __init__(self,smiles_path,output_path):
         self.smiles_path = Path(smiles_path)
         self.output_path = Path(output_path)
@@ -46,6 +46,9 @@ class Main():
         for one in one_set:
             self.cset |= one
 
+
+def make_vocab(smiles_path,output_path):
+    MakeVocab(smiles_path,output_path)
 
 def main():
     parser = ArgumentParser()

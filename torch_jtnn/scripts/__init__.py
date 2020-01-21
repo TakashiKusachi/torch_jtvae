@@ -1,3 +1,6 @@
 
-from torch_jtnn.scripts.made_vocab import main as make_vocab
-from torch_jtnn.scripts.preprocess import main as jtnn_prepro
+from torch_jtnn.scripts.made_vocab import make_vocab
+from torch_jtnn.scripts.preprocess import preprocess
+
+from torch_jtnn.scripts.made_vocab import main as cli_make_vocab
+from torch_jtnn.scripts.preprocess import main as cli_jtnn_prepro
