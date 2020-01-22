@@ -2,6 +2,7 @@ from torch_jtnn.mol_tree import MolTree
 from multiprocessing import Pool
 from argparse import ArgumentParser
 from pathlib import Path
+import rdkit
 
 class MakeVocab():
     def __init__(self,smiles_path,output_path):
@@ -48,16 +49,20 @@ class MakeVocab():
 
 
 def make_vocab(smiles_path,output_path):
-    MakeVocab(smiles_path,output_path)
+    lg = rdkit.RDLogger.logger() 
+    lg.setLevel(rdkit.RDLogger.CRITICAL)
+    MakeVocab(smiles_path,output_path)()
 
 def main():
+    lg = rdkit.RDLogger.logger() 
+    lg.setLevel(rdkit.RDLogger.CRITICAL)
     parser = ArgumentParser()
     parser.add_argument("smiles_path")
     parser.add_argument("output_path")
 
     args = parser.parse_args()
 
-    proc = Main(**args.__dict__)
+    proc = MakeVocab(**args.__dict__)
     proc()
 
 

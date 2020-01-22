@@ -54,6 +54,8 @@ class Preprocess():
             gc.collect()
 
 def preprocess(train_path,nsplits,njobs):
+    lg = rdkit.RDLogger.logger() 
+    lg.setLevel(rdkit.RDLogger.CRITICAL)
     proc = Preprocess(train_path,nsplits,njobs)
     proc()
 

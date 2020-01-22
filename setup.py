@@ -10,12 +10,13 @@ setup(
     version="0.0.1",
     author="TakashiKusachi",
     description=desctiprion,
-    install_requires=['pytorch'],
+    install_requires=[],
     packages=find_packages(exclude=['example']),
     entry_points={
         'console_scripts':[
             'make_vocab = torch_jtnn.scripts:cli_make_vocab',
-            'jtnn_prepro = torch_jtnn.scripts:cli_jtnn_prepro'
+            'jtnn_prepro = torch_jtnn.scripts:cli_jtnn_prepro',
+            'jtnn_train = torch_jtnn.scripts:cli_jtnn_train'
         ]
     }
 )
