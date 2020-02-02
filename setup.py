@@ -10,8 +10,18 @@ setup(
     version="0.0.1",
     author="TakashiKusachi",
     description=desctiprion,
-    install_requires=[],
-    packages=find_packages(exclude=['example']),
+    install_requires=[
+        'torchvision',
+        'torch',
+    ],
+    extras_require={
+        'example':[
+            ],
+        'doc':[
+            'sphinx'
+            ],
+    },
+    packages=find_packages(exclude=['example','docs']),
     entry_points={
         'console_scripts':[
             'make_vocab = torch_jtnn.scripts:cli_make_vocab',

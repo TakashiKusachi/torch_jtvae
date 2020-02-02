@@ -14,6 +14,16 @@ import rdkit.Chem as Chem
 import copy, math
 
 class JTNNVAE(nn.Module):
+    """Junction Tree Variational Autoencoder Model.
+    
+    Args:
+        vocab (torch_jtnn.Vocab): 
+        hidden_size (int): 
+        latent_size (int):
+        depthT (int):
+        depthG (int):
+    
+    """
 
     def __init__(self, vocab, hidden_size, latent_size, depthT, depthG):
         super(JTNNVAE, self).__init__()

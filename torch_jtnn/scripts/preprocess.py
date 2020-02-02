@@ -26,7 +26,18 @@ def tensorize(smiles, assm=True):
     return mol_tree
 
 class Preprocess():
+    """Preprocess dataset for JTVAE
+
+    Args:
+        train_path (str):
+        nsplits (int): Number of data set to split.
+        njobs (int): Number of jobs for processing.
+    """
+    
     def __init__(self,train_path,nsplits,njobs):
+        """[summary]
+        """
+        
         self.train_path = train_path
         self.nsplits = nsplits
         self.njobs = njobs
@@ -54,6 +65,13 @@ class Preprocess():
             gc.collect()
 
 def preprocess(train_path,nsplits,njobs):
+    """ Preprocess dataset for JTVAE
+
+    Args:
+        train_path (str):
+        nsplits (int): Number of data set to split.
+        njobs (int): Number of jobs for processing.
+    """
     lg = rdkit.RDLogger.logger() 
     lg.setLevel(rdkit.RDLogger.CRITICAL)
     proc = Preprocess(train_path,nsplits,njobs)

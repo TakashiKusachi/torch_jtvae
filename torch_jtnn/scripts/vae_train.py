@@ -14,7 +14,37 @@ from torch_jtnn import *
 import rdkit
 
 class JTVAETrainer():
-    def __init__(self,**args):
+    """JTVAE training application
+
+    Args:
+        train (str): Path of training data file 
+        vocab (str): Path of vocablary file
+        save_dir (str): Path of save directory
+
+        load_epoch (int,optional): epoch number of trained model
+
+        hidden_size (int,optional): Size of hidden layer.
+        latent_size (int,optional): Size of latent variable.
+        depthT (int,optional): depth of tree.
+        depthG (int,optional): depth of graph.
+
+        lr (float,optional): 
+        clip_norm (float,optional):
+        beta (float,optional):
+        step_beta (float,optional):
+        max_beta (float,optional):
+        warmup (int,optional):
+
+        epoch (int,optional):
+        batch_size (int,optional):
+        anneal_rate (float,optional):
+        anneal_iter (int,optional):
+        kl_anneal_iter (int,optional):
+        print_iter (int,optional):
+        save_iter (int,optional):
+
+    """    
+    def __init__(self,**args): 
 
         self.train = args['train']
         self.vocab = args['vocab']
@@ -136,6 +166,36 @@ class JTVAETrainer():
         return parser
 
 def jtvae_trainer(train,vocab,save_dir,**kwargs):
+    """JTVAE training application
+
+    Args:
+        train (str): Path of training data file 
+        vocab (str): Path of vocablary file
+        save_dir (str): Path of save directory
+
+        load_epoch (int,optional): epoch number of trained model
+
+        hidden_size (int,optional): Size of hidden layer.
+        latent_size (int,optional): Size of latent variable.
+        depthT (int,optional): depth of tree.
+        depthG (int,optional): depth of graph.
+
+        lr (float,optional): 
+        clip_norm (float,optional):
+        beta (float,optional):
+        step_beta (float,optional):
+        max_beta (float,optional):
+        warmup (int,optional):
+
+        epoch (int,optional):
+        batch_size (int,optional):
+        anneal_rate (float,optional):
+        anneal_iter (int,optional):
+        kl_anneal_iter (int,optional):
+        print_iter (int,optional):
+        save_iter (int,optional):
+
+    """   
     lg = rdkit.RDLogger.logger() 
     lg.setLevel(rdkit.RDLogger.CRITICAL)
     JTVAETrainer(train=train,vocab=vocab,save_dir=save_dir,**kwargs)()

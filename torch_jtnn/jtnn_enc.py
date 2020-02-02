@@ -6,6 +6,14 @@ from torch_jtnn.mol_tree import Vocab, MolTree
 from torch_jtnn.nnutils import create_var, index_select_ND
 
 class JTNNEncoder(nn.Module):
+    """Junction tree encoder.
+    
+    Args:
+        hidden_size (int): 
+        depth (int):
+        embedding (torch.nn.embedding):
+    
+    """
 
     def __init__(self, hidden_size, depth, embedding):
         super(JTNNEncoder, self).__init__()

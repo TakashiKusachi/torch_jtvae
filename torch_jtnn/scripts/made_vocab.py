@@ -5,6 +5,14 @@ from pathlib import Path
 import rdkit
 
 class MakeVocab():
+    """ Make of vocabulary from smiles file.
+    
+
+    Args:
+        smiles_path (str): 
+        output_path (str):
+
+    """
     def __init__(self,smiles_path,output_path):
         self.smiles_path = Path(smiles_path)
         self.output_path = Path(output_path)
@@ -49,6 +57,12 @@ class MakeVocab():
 
 
 def make_vocab(smiles_path,output_path):
+    """ make vocabrary scripts.
+    
+    Args:
+        smiles_path (str): 
+        output_path (str):
+    """
     lg = rdkit.RDLogger.logger() 
     lg.setLevel(rdkit.RDLogger.CRITICAL)
     MakeVocab(smiles_path,output_path)()
