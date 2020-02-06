@@ -207,6 +207,8 @@ class JTNNDecoder(nn.Module):
         stack.append( (root, self.vocab.get_slots(root.wid)) )
 
         all_nodes = [root]
+        all_nodes_score = [root_score[0,root_wid]]
+        
         h = {}
         for step in range(MAX_DECODE_LEN):
             node_x,fa_slot = stack[-1]
@@ -237,16 +239,18 @@ class JTNNDecoder(nn.Module):
                 if prob_decode:
                     sort_wid = torch.multinomial(F.softmax(pred_score, dim=1).squeeze(), 5)
                 else:
-                    _,sort_wid = torch.sort(pred_score, dim=1, descending=True)
+                    sort_score,sort_wid = torch.sort(pred_score, dim=1, descending=True)
                     sort_wid = sort_wid.data.squeeze()
+                    sort_score = sort_score.squeeze()
 
                 next_wid = None
-                for wid in sort_wid[:5]:
+                for wid,score in zip(sort_wid[:5],pred_score[0,:5]):
                     slots = self.vocab.get_slots(wid)
                     node_y = MolTreeNode(self.vocab.get_smiles(wid))
                     if have_slots(fa_slot, slots) and can_assemble(node_x, node_y):
                         next_wid = wid
                         next_slots = slots
+                        next_score = score
                         break
 
                 if next_wid is None:
@@ -259,6 +263,7 @@ class JTNNDecoder(nn.Module):
                     h[(node_x.idx,node_y.idx)] = new_h[0]
                     stack.append( (node_y,next_slots) )
                     all_nodes.append(node_y)
+                    all_nodes_score.append(next_score)
 
             if backtrack: #Backtrack, use if instead of else
                 if len(stack) == 1: 
@@ -276,7 +281,7 @@ class JTNNDecoder(nn.Module):
                 node_fa.neighbors.append(node_x)
                 stack.pop()
 
-        return root, all_nodes
+        return root, all_nodes,all_nodes_score
 
 """
 Helper Functions:

@@ -123,7 +123,10 @@ class JTNNVAE(nn.Module):
         #currently do not support batch decoding
         assert x_tree_vecs.size(0) == 1 and x_mol_vecs.size(0) == 1
 
-        pred_root,pred_nodes = self.decoder.decode(x_tree_vecs, prob_decode)
+        pred_root,pred_nodes,pred_scores = self.decoder.decode(x_tree_vecs, prob_decode)
+        self.pred_nodes = pred_nodes
+        self.pred_scores = pred_scores
+
         if len(pred_nodes) == 0: return None
         elif len(pred_nodes) == 1: return pred_root.smiles
 
