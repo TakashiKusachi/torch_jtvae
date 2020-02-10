@@ -207,7 +207,7 @@ class JTNNDecoder(nn.Module):
         stack.append( (root, self.vocab.get_slots(root.wid)) )
 
         all_nodes = [root]
-        all_nodes_score = [root_score[0,root_wid]]
+        all_nodes_score = [F.softmax(root_score, dim=1)[0,root_wid]]
         
         h = {}
         for step in range(MAX_DECODE_LEN):
@@ -239,12 +239,13 @@ class JTNNDecoder(nn.Module):
                 if prob_decode:
                     sort_wid = torch.multinomial(F.softmax(pred_score, dim=1).squeeze(), 5)
                 else:
+                    pred_score = F.softmax(pred_score, dim=1)
                     sort_score,sort_wid = torch.sort(pred_score, dim=1, descending=True)
                     sort_wid = sort_wid.data.squeeze()
                     sort_score = sort_score.squeeze()
 
                 next_wid = None
-                for wid,score in zip(sort_wid[:5],pred_score[0,:5]):
+                for wid,score in zip(sort_wid[:5],sort_score[:5]):
                     slots = self.vocab.get_slots(wid)
                     node_y = MolTreeNode(self.vocab.get_smiles(wid))
                     if have_slots(fa_slot, slots) and can_assemble(node_x, node_y):

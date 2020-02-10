@@ -23,6 +23,10 @@ class JTNNVAE(nn.Module):
         depthT (int):
         depthG (int):
     
+    Attributes:
+        pred_nodes (list of ): after JTNNVAE.decode
+        pred_scores (list of ): after JTNNVAE.decode
+    
     """
 
     def __init__(self, vocab, hidden_size, latent_size, depthT, depthG):
