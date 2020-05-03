@@ -232,4 +232,17 @@ class JTNNVAE(nn.Module):
             if not has_error: return cur_mol, cur_mol
 
         return None, pre_mol
+    
+    @staticmethod
+    def config_dict(config=None):
+        if config is None:
+            config = {'hidden_size':100, 'latent_size':56, 'depthT':20, 'depthG':5}
+        else:
+            config = {key:conv(config[key]) for key,conv in zip(
+                ['hidden_size','latent_size','depthT','depthG'],
+                [int,int,int,int])
+                
+        }
+
+        return config
 

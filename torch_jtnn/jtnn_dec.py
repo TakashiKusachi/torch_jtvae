@@ -16,6 +16,7 @@ class JTNNDecoder(nn.Module):
         self.hidden_size = hidden_size
         self.vocab_size = vocab.size()
         self.vocab = vocab
+        self.weight = torch.Tensor(self.vocab.weightes)
         self.embedding = embedding
 
         #GRU Weights
@@ -36,7 +37,7 @@ class JTNNDecoder(nn.Module):
         self.U_o = nn.Linear(hidden_size, 1)
 
         #Loss Functions
-        self.pred_loss = nn.CrossEntropyLoss(size_average=False)
+        self.pred_loss = nn.CrossEntropyLoss(reduction='mean')
         self.stop_loss = nn.BCEWithLogitsLoss(size_average=False)
 
     def aggregate(self, hiddens, contexts, x_tree_vecs, mode):

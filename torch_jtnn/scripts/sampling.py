@@ -18,8 +18,8 @@ class JTVAESampling():
         self.depthG = args.get('depthG',3)
 
     def __call__(self):
-        vocab = [x.strip("\r\n") for x in open(self.vocab)]
-        vocab = Vocab(vocab)
+        vocab,weights = zip(*[(x.split(',')[0].strip('\n\r'),int(x.split(',')[1].strip('\n\r'))) for x in open(self.vocab) ])
+        vocab = Vocab(vocab,weights)
 
         model = JTNNVAE(vocab,self.hidden_size,self.latent_size,self.depthT,self.depthG)
         model.load_state_dict(torch.load(self.model))
