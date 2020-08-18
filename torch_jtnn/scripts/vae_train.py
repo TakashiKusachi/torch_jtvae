@@ -76,8 +76,12 @@ class JTVAETrainer():
 
 
     def __call__(self):
-        vocab = [x.strip("\r\n ") for x in open(self.vocab)] 
-        vocab = Vocab(vocab)
+        vocab,weights = zip(*[(x.split(',')[0].strip('\n\r'),int(x.split(',')[1].strip('\n\r'))) for x in open(self.vocab) ])
+        #print(vocab)
+        #print(weights)
+        weights = 1/np.asarray(weights)
+        print(type(weights))
+        vocab = Vocab(vocab,weightes=weights)
 
         model = JTNNVAE(vocab, self.hidden_size, self.latent_size, self.depthT, self.depthG).cuda()
         print (model)

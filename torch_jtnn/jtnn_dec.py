@@ -16,6 +16,7 @@ class JTNNDecoder(nn.Module):
         self.hidden_size = hidden_size
         self.vocab_size = vocab.size()
         self.vocab = vocab
+        self.weight = torch.Tensor(self.vocab.weightes)
         self.embedding = embedding
 
         #GRU Weights

@@ -3,6 +3,7 @@ from multiprocessing import Pool
 from argparse import ArgumentParser
 from pathlib import Path
 import rdkit
+import collections 
 
 class MakeVocab():
     """ Make of vocabulary from smiles file.
@@ -37,8 +38,8 @@ class MakeVocab():
                 print(r.get())
         print("Number of Vocab: {}".format(len(self.cset)))
         with self.output_path.open("w") as f:
-            for one in self.cset:
-                f.write(one+'\n')
+            for key,count in self.count.items():
+                f.write(key+','+str(count)+'\n')
 
     def get_vocab(self,smiles):
         cset = set()
@@ -47,13 +48,20 @@ class MakeVocab():
         except Exception as e:
             pass
         else:
-            for c in mol.nodes:
-                cset.add(c.smiles)
+            smiles_list = [c.smiles for c in mol.nodes]
+            cset = collections.Counter(smiles_list)
         return cset
 
     def callback(self,one_set):
+        result = dict()
         for one in one_set:
-            self.cset |= one
+            for key,value in one.items():
+                if key not in result:
+                    result[key] = 0
+                result[key] += value
+        
+        self.cset |= set(result.keys())
+        self.count = result
 
 
 def make_vocab(smiles_path,output_path):
