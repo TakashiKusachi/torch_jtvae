@@ -7,7 +7,7 @@ with open("./description.txt") as f:
 
 setup(
     name="torch_jtnn",
-    version="0.0.1",
+    version="1.0.0",
     author="TakashiKusachi",
     description=desctiprion,
     install_requires=[
